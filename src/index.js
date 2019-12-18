@@ -3,6 +3,9 @@ import widthsMap from './widthsMap';
 
 const settingsDefaults = { font: 'Arial', size: 100 };
 
+// Unicode range of CJK characters & punctuation
+const cjkCharacterRange = /[\u3000-\u9FEF\u3000-\u303F\uD7B0–\uD7FF\uFE30-\uFE4F\uFF00-\uFFEF\u1100-\u11FF\uA960–\uA97F\uAC00-\uD7AF]/
+
 const getWidth = (string, settings) => {
   const sett = { ...settingsDefaults, ...settings };
   const font = sett.font.toLowerCase();
@@ -20,7 +23,8 @@ const getWidth = (string, settings) => {
     }
     // use width of 'x' as fallback for unregistered char
     const widths = map[font][char] || map[font].x;
-    const width = widths[variant];
+    // width is consistent for every CJK character
+    const width = cjkCharacterRange.test(char) ? 100 : widths[variant];
     totalWidth += width;
     return true;
   });

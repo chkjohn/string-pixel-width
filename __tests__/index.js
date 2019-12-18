@@ -47,3 +47,7 @@ test('test non-existing font', () => {
 test('test printable, but unregistered character', () => {
   expect(index('‐')).toBe(50);
 });
+
+test('test CJK characters', () => {
+  expect(index('中日韓符號 シージェーケーとうごうかんじ 한중일 기호 및 구두점', { font: 'Times New Roman' })).toBe(2925)
+})
